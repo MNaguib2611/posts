@@ -10,9 +10,12 @@ if (isset($_SESSION['username'])) {
   $_SESSION['fullname'] = $data[0]['fullname'];
   $_SESSION['iduser'] =  $data[0]['iduser'];
   $_SESSION['is_admin'] =  $data[0]['is_admin'];
+  $_SESSION['profile_pic'] =  $data[0]['profile_pic'];
   $fullname = $_SESSION['fullname'];
   $is_admin =$_SESSION['is_admin'];
   $iduser = $_SESSION['iduser'];
+  $picprofile = $_SESSION['profile_pic'];
+  echo "<img id='profilepic' src='images/$picprofile'>";
   if ($is_admin == 0) {
     header("location:profileenduser.php");
   }else{
@@ -52,13 +55,19 @@ if (isset($_SESSION['username'])) {
     border-collapse: separate !important;
     margin-bottom: 5px !important;
 	}
+  img {
+    height: 200px;
+    float: right;
+    border-radius: 50%;
+  }
  </style>
  <body class="container">
   <h1>Admin Profile will be here</h1><br>
    <a href="links/posts.php">Post Something</a><br>
- <a href="links/comments.php">View Posts</a><br><br>
+   <a href="links/myposts.php">My Posts</a><br>
+ <a href="links/comments.php">View All Posts</a><br><br>
   <a href="links/manageusers.php">Manage Users</a><br>
-  <a href="links/manageusers.php">Manage Posts</a><br><br> 
+  <a href="links/manageposts.php">Manage Posts</a><br><br> 
 
   <a href="links/logout.php">Logout</a>  
 

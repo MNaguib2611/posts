@@ -20,14 +20,17 @@ if (isset($_SESSION['username'])) {
 			$username = $_POST['username'];
 			$password = $_POST['password'];
 			$admin = $_POST['is_admin'];
-			$queryadd = "INSERT INTO users (fullname,username,password,is_admin) VALUES('$fullname1','$username','$password','$admin')";
+			$image_profile = $username.'.jpg' ;
+			$destination =  dirname(__file__).'/../images/'.$username.'.jpg' ;
+			move_uploaded_file($_FILES['image']['tmp_name'],$destination);
+			$queryadd = "INSERT INTO users (fullname,username,password,profile_pic,is_admin) VALUES('$fullname1','$username','$password','$image_profile','$admin')";
 			$resultadd = mysqli_query($connect,$queryadd);
 			if ($resultadd) {
 				echo "process success";
-				header("refresh:3 ; url=manageusers.php");
+				// header("refresh:3 ; url=manageusers.php");
 			}else{
 				echo "process fail";
-				header("refresh:3 ; url=manageusers.php");
+				// header("refresh:3 ; url=manageusers.php");
 			}
 		}elseif (isset($_POST['fullname'])) {
 			echo "using removeuser......";
@@ -81,11 +84,12 @@ if (isset($_SESSION['username'])) {
  <div class="container">
  	<div class=" divinside col-lg-6 col-lg-offset-3">
  		<h2>Add user</h2>
- 		<form method="post">
+ 		<form method="post" enctype="multipart/form-data">
  			<table class="table">
  				<tr><th>fullname</th><td><input type="text" name="fullname"></td></tr>
  				<tr><th>username</th><td><input type="text" name="username"></td></tr>
  				<tr><th>password</th><td><input type="text" name="password"></td></tr>
+ 				<tr><th>profile pic</th><td><input type="file" name="image"></td></tr>
  				<tr><th>is_admin</th><td><input id="num1" type="number" name="is_admin" placeholder="0:enduser / 1:admin"></td></tr>
  				<tr><th>&nbsp;</th><td><input id="button1" type="submit" class="btn-success" value="Add User"></td></tr>
  			</table>
