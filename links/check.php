@@ -4,18 +4,22 @@
 
 
 $connect = mysqli_connect("localhost","root","","social-media");
-		$username = "mg1993";
-		$admin = 1 ;
-$queryadmin="UPDATE users SET is_admin = '$admin' WHERE username ='$username'";
-		$resultadmin = mysqli_query($connect,$queryadmin);
-		if ($resultadmin) {
-			echo "process success";
-			// header("refresh:3 ; url=manageusers.php");
-		}else{
-			echo "process fail";
-			// header("refresh:3 ; url=manageusers.php");
-		}
-
-
-
+$query   = "SELECT * FROM posts where idpost='5' ";
+$result = mysqli_query($connect,$query);
+$data[]=mysqli_fetch_assoc($result);
+$post=$data[0]["post"];
+echo "<script type='text/javascript'>document.getElementById('editpost').value = $post ;</script>";
  ?>
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+ <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+ <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+
+ <textarea id="editpost">
+ 	
+ </textarea>

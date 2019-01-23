@@ -1,25 +1,39 @@
 <?php 
-
 session_start();
-$fullname = $_SESSION['fullname'];
-echo "<h1>Hello , $fullname <h1>";
-$username=$_SESSION['username'];
-$iduser = $_SESSION['iduser'];
-if (isset($_SESSION['username']) && isset($_SESSION['iduser'])) {
-	if (isset( $_POST['title'])) {
-	$title = $_POST['title'];
-    $post = $_POST['post'];
-	$connect = mysqli_connect("localhost","root","","social-media");
-	$query   = "INSERT INTO posts (title,post,user_id) VALUES('$title','$post','$iduser')";
-	$result = mysqli_query($connect, $query);
-		if ($result) {
-			echo "post added successfully";
-		}else{
-			echo "Error ,Try again later";
+if (isset($_SESSION['username'])) {
+	$fullname = $_SESSION['fullname'];
+	echo "<h1>Hello , $fullname <h1>";
+	$username=$_SESSION['username'];
+	$iduser = $_SESSION['iduser'];
+	if (isset($_SESSION['username']) && isset($_SESSION['iduser'])) {
+		if (isset( $_POST['title'])) {
+		$title = $_POST['title'];
+	    $post = $_POST['post'];
+		$connect = mysqli_connect("localhost","root","","social-media");
+		$query   = "INSERT INTO posts (title,post,user_id) VALUES('$title','$post','$iduser')";
+		$querypreventerror   = "SELECT * FROM posts WHERE title='$title'";
+		$result = mysqli_query($connect, $query);
+			if ($result) {
+				echo "post added successfully";
+				$resultpreventerror =mysqli_query($connect, $querypreventerror);
+				$data1[]=mysqli_fetch_assoc($resultpreventerror);
+				$preventerrorr =  $data1[0]['idpost'];
+				$queryerrorcomment   = "INSERT INTO comments (comment,user_id,post_id) VALUES('this comment is to prevent error','$iduser','$preventerrorr')";
+				$resulterrorcomment =mysqli_query($connect, $queryerrorcomment );
+				if ($resulterrorcomment ) {
+					echo " comment success";
+				}else{
+					echo "comment fail";
+				}
+				header("refresh:3 ; url=posts.php");
+			}else{
+				echo "Error ,Try again later";
+			}
 		}
 	}
+}else{
+	header("location: logout.php");
 }
-
  ?>
 
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">

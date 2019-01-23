@@ -1,62 +1,67 @@
 <?php 
 session_start();
-$connect = mysqli_connect("localhost","root","","social-media");
-$fullname = $_SESSION['fullname'];
-$is_admin =$_SESSION['is_admin'];
-if ($is_admin == 0) {
-	echo "<h1>YOU DON'T HAVE AUTHORIZATION TO VIEW THIS PAGE,REDIRECTING..........</h1> ";
-	echo "<style>div{display:none;}</style>";
-	header("refresh:3 ; url=../profileenduser.php");
-}else{
-	echo "<h1>Hello , $fullname <h1>";
-	echo "<style>*{margin-left:20px;}</style>";
-}
-
-if (isset($_POST['username']) && ($_POST['username'] !=="") ) {
-	if (isset($_POST['fullname'],$_POST['password'],$_POST['is_admin'])) {
-		echo "using adduser.......";
-		$fullname = $_POST['fullname'];
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$admin = $_POST['is_admin'];
-		$queryadd = "INSERT INTO users (fullname,username,password,is_admin) VALUES('$fullname','$username','$password','$admin')";
-		$resultadd = mysqli_query($connect,$queryadd);
-		if ($resultadd) {
-			echo "process success";
-			header("refresh:3 ; url=manageusers.php");
-		}else{
-			echo "process fail";
-			header("refresh:3 ; url=manageusers.php");
-		}
-	}elseif (isset($_POST['fullname'])) {
-		echo "using removeuser......";
-		$username = $_POST['username'];
-		$fullname = $_POST['fullname'];
-		$queryremove="DELETE FROM users where username ='$username' AND fullname='$fullname' ";
-		$resultremove = mysqli_query($connect,$queryremove);
-		if ($resultremove) {
-			echo "process success";
-			header("refresh:3 ; url=manageusers.php");
-		}else{
-			echo "process fail";
-			header("refresh:3 ; url=manageusers.php");
-		}
-		header("refresh:3 ; url=manageusers.php");
-	}elseif (isset($_POST['is_admin'])) {
-		echo "using controlluser.........";
-		$username = $_POST['username'];
-		$admin = $_POST['is_admin'];
-		$queryadmin="UPDATE users SET is_admin = '$admin' WHERE username ='$username'";
-		$resultadmin = mysqli_query($connect,$queryadmin);
-		if ($resultadmin) {
-			echo "process success";
-			header("refresh:3 ; url=manageusers.php");
-		}else{
-			echo "process fail";
-			header("refresh:3 ; url=manageusers.php");
-		}
+if (isset($_SESSION['username'])) {
+	$connect = mysqli_connect("localhost","root","","social-media");
+	$fullname = $_SESSION['fullname'];
+	$is_admin =$_SESSION['is_admin'];
+	if ($is_admin == 0) {
+		echo "<h1>YOU DON'T HAVE AUTHORIZATION TO VIEW THIS PAGE,REDIRECTING..........</h1> ";
+		echo "<style>div{display:none;}</style>";
+		header("refresh:3 ; url=../profileenduser.php");
+	}else{
+		echo "<h1>Hello , $fullname <h1>";
+		echo "<style>*{margin-left:20px;}</style>";
 	}
-	
+
+	if (isset($_POST['username']) && ($_POST['username'] !=="") ) {
+		if (isset($_POST['fullname'],$_POST['password'],$_POST['is_admin'])) {
+			echo "using adduser.......";
+			$fullname1 = $_POST['fullname'];
+			$username = $_POST['username'];
+			$password = $_POST['password'];
+			$admin = $_POST['is_admin'];
+			$queryadd = "INSERT INTO users (fullname,username,password,is_admin) VALUES('$fullname1','$username','$password','$admin')";
+			$resultadd = mysqli_query($connect,$queryadd);
+			if ($resultadd) {
+				echo "process success";
+				header("refresh:3 ; url=manageusers.php");
+			}else{
+				echo "process fail";
+				header("refresh:3 ; url=manageusers.php");
+			}
+		}elseif (isset($_POST['fullname'])) {
+			echo "using removeuser......";
+			$username = $_POST['username'];
+			$fullname1 = $_POST['fullname'];
+			$queryremove="DELETE FROM users where username ='$username' AND fullname='$fullname1' ";
+			$resultremove = mysqli_query($connect,$queryremove);
+			if ($resultremove) {
+				echo "process success";
+				header("refresh:3 ; url=manageusers.php");
+			}else{
+				echo "process fail";
+				header("refresh:3 ; url=manageusers.php");
+			}
+			header("refresh:3 ; url=manageusers.php");
+		}elseif (isset($_POST['is_admin'])) {
+			echo "using controlluser.........";
+			$username = $_POST['username'];
+			$admin = $_POST['is_admin'];
+			$queryadmin="UPDATE users SET is_admin = '$admin' WHERE username ='$username'";
+			$resultadmin = mysqli_query($connect,$queryadmin);
+			if ($resultadmin) {
+				echo "process success";
+				header("refresh:3 ; url=manageusers.php");
+			}else{
+				echo "process fail";
+				header("refresh:3 ; url=manageusers.php");
+			}
+		}
+		
+	}
+
+}else{
+	header("location: logout.php");
 }
 
 

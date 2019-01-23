@@ -5,11 +5,11 @@ if (isset( $_POST['username'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $connect = mysqli_connect("localhost","root","","social-media");
-    $query   = "SELECT * FROM users where username='$username' AND password ='$password'";
+    $query   = "SELECT * FROM users WHERE username='$username' AND password ='$password'";
     $result = mysqli_query($connect,$query);
     if (mysqli_num_rows($result)>0){
         $_SESSION['username'] = $_POST['username'];
-        $query2   = "SELECT * FROM users where username='$username' AND is_admin = 1";
+        $query2   = "SELECT * FROM users WHERE username='$username' AND is_admin = 1";
         $result2 = mysqli_query($connect,$query2);
         if (mysqli_num_rows($result2)>0) {
             header("refresh:1; url=profileadmin.php");
@@ -41,7 +41,7 @@ if (isset( $_POST['username'])) {
  </style>
 </head>
 <body class="container">
-  <div id="div1" class="col-lg-4 col-lg-offset-4">
+  <div id="div1" class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
 	<h3>Login</h3>
     <form method="post">
       <table class="table">

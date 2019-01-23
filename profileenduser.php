@@ -1,22 +1,25 @@
 <?php 
 session_start();
-$username1=$_SESSION['username'];
-$connect = mysqli_connect("localhost","root","","social-media");
-$query   = "SELECT * FROM users where username='$username1' ";
-$result = mysqli_query($connect,$query);
-$data[]=mysqli_fetch_assoc($result);
-$_SESSION['fullname'] = $data[0]['fullname'];
-$_SESSION['iduser'] =  $data[0]['iduser'];
-$_SESSION['is_admin'] =  $data[0]['is_admin'];
-$fullname = $_SESSION['fullname'];
-$is_admin =$_SESSION['is_admin'];
-$iduser = $_SESSION['iduser'];
-if ($is_admin == 1) {
-	header("location:profileadmin.php");
+if (isset($_SESSION['username'])) {
+	$username1=$_SESSION['username'];
+	$connect = mysqli_connect("localhost","root","","social-media");
+	$query   = "SELECT * FROM users where username='$username1' ";
+	$result = mysqli_query($connect,$query);
+	$data[]=mysqli_fetch_assoc($result);
+	$_SESSION['fullname'] = $data[0]['fullname'];
+	$_SESSION['iduser'] =  $data[0]['iduser'];
+	$_SESSION['is_admin'] =  $data[0]['is_admin'];
+	$fullname = $_SESSION['fullname'];
+	$is_admin =$_SESSION['is_admin'];
+	$iduser = $_SESSION['iduser'];
+	if ($is_admin == 1) {
+		header("location:profileadmin.php");
+	}else{
+		echo "<h1>Hello , $fullname <h1>";
+	}
 }else{
-	echo "<h1>Hello , $fullname <h1>";
+	header("location: links/logout.php");
 }
-
 
 ?>
 
