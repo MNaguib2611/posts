@@ -14,33 +14,40 @@ if (isset($_SESSION['username'])) {
 	}
 	if (isset($_POST['idpost']) && ($_POST['idpost'] !=="") ) {
 		if (isset($_POST['title'], $_POST['user_id'] )){
-			echo "using removePost......";
+			echo "using removePost......<br>";
 			$idpost = $_POST['idpost'];
 			$title = $_POST['title'];
 			$user_id = $_POST['user_id'];
-			$queryremovepost="DELETE FROM posts where idpost ='$idpost' AND title='$title' AND user_id='$user_id' ";
-			$resultremovepost = mysqli_query($connect,$queryremovepost);
-			if ($resultremovepost) {
-				echo "process success";
+			$queryremovepost1="SELECT * FROM posts where idpost ='$idpost' AND title='$title' AND user_id='$user_id' ";
+			$resultremovepost1 = mysqli_query($connect,$queryremovepost1);
+			
+			if (mysqli_num_rows($resultremovepost1)>0) {
+				echo "process success<br>";
+				$queryremovepost2="DELETE FROM posts where idpost ='$idpost' AND title='$title' AND user_id='$user_id' ";
+				$resultremovepost2 = mysqli_query($connect,$queryremovepost2);
 				header("refresh:3 ; url=manageposts.php");
 			}else{
-				echo "process fail";
-				header("refresh:3 ; url=manageposts.php");
+				echo "process fail<br>";
+				echo "No such post,confirm you have thecorrect  idpost , title & user_id ";
 			}
 		}elseif(isset($_POST['comment_id'], $_POST['user_id'] )){
-			echo "using removeComment......";
+			echo "using removeComment......<br>";
 			$idpost = $_POST['idpost'];
 			$comment_id = $_POST['comment_id'];
 			$user_id = $_POST['user_id'];
-			$queryremovecomment="DELETE FROM comments where post_id ='$idpost' AND idcomment='$comment_id' AND user_id='$user_id' ";
-			$resultremovecomment = mysqli_query($connect,$queryremovecomment);
-			if ($resultremovecomment) {
-				echo "process success";
+			$queryremovecomment1="SELECT * FROM comments WHERE post_id ='$idpost' AND idcomment='$comment_id' AND user_id='$user_id' ";
+			$resultremovecomment1 = mysqli_query($connect,$queryremovecomment1);
+			if (mysqli_num_rows($resultremovecomment1)>0) {
+				$queryremovecomment2="DELETE FROM comments WHERE post_id ='$idpost' AND idcomment='$comment_id' AND user_id='$user_id' ";
+				$resultremovecomment2 = mysqli_query($connect,$queryremovecomment2);
+				echo "process success<br>";
 				header("refresh:3 ; url=manageposts.php");
 			}else{
-				echo "process fail";
-				header("refresh:3 ; url=manageposts.php");
+				echo "process fail<br>";
+				echo "No such comment,confirm you have the correct idcomment , post_id & user_id ";
 			}
+			
+			
 
 		}elseif(isset($_POST['title'], $_POST['post'] )){
 			echo "using editPost......";

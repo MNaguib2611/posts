@@ -44,7 +44,7 @@ if (isset($_SESSION['username'])) {
         echo "</div>";
         echo "<div id='comments' class='high col-md-4 bg-info' >";
         $querycomments   = "SELECT * FROM comments WHERE post_id ='$idpost' ";
-    	$resultcomments = mysqli_query($connect,$querycomments);
+    	$resultcomments = mysqli_query($connect,$querycomments); //if (mysqli_num_rows($resultcomments)>0){the below code}else{this post has no comments yet}
     	for ($i = 0 ; $i<mysqli_num_rows($resultcomments); $i++){
     		$postcomments[]=mysqli_fetch_assoc($resultcomments);
     	}
@@ -118,4 +118,3 @@ if (isset($_SESSION['username'])) {
 <a href="logout.php">Logout</a>&nbsp; &nbsp; &nbsp;<a href="../profileadmin.php">profile</a>
 </div>
 </body>
-<div></div><table cellspacing="" =''></table>

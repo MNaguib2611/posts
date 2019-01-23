@@ -4,7 +4,7 @@ if (isset($_SESSION['username'])) {
   $connect = mysqli_connect("localhost","root","","social-media");
   $username1=$_SESSION['username'];
   $connect = mysqli_connect("localhost","root","","social-media");
-  $query   = "SELECT * FROM users where username='$username1' ";
+  $query   = "SELECT * FROM users WHERE username='$username1' ";
   $result = mysqli_query($connect,$query);
   $data[]=mysqli_fetch_assoc($result);
   $_SESSION['fullname'] = $data[0]['fullname'];
